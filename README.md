@@ -4,7 +4,10 @@ Extension for JQuery plug-in DataTables adding drop down filter elements for sel
 ## Description
 Adds a dropDown element for selected columns to a Datatable allowing the user to filter the table to only show rows containing a certain value. e.g. in a list of employees to only show the ones that have an office in a certain city.
 The filter element extracts all unique values from a column and adds them sorted and stripped as options.
- 
+
+Here is a screenshot showing how it looks like in action:
+![alt text](http://i.imgur.com/3PmLZKA.png "Example Screenshot of the filterDropDown")
+
 ## Features
  - Optionally works with Bootstrap 3 styling
  - Uses column header as default title, can be overriden with custom title
