@@ -2,7 +2,8 @@
 Extension for JQuery plug-in DataTables adding drop down filter elements for selected columns
 
 ## Description
-Adds a dropDown element for selected columns to a Datatable allowing the user to filter the table to only show rows containing a certain value. e.g. in a list of employees to only show the ones  that have an office in a certain city.
+Adds a dropDown element for selected columns to a Datatable allowing the user to filter the table to only show rows containing a certain value. e.g. in a list of employees to only show the ones that have an office in a certain city.
+The filter element extracts all unique values from a column and adds them sorted and stripped as options.
  
 ## Features
  - Optionally works with Bootstrap 3 styling
@@ -47,4 +48,11 @@ columns|array|yes|N/A|Array of definition, one for each column that gets a filte
 columns[].idx|number|yes|N/A|Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array
 columns[].cssStyle|string|no|""|CSS style to be applied to this select element.
 columns[].cssClass|string|no|""|CSS class to be applied to this select element.
+columns[].titleOverride|string|no|header text of respective column|This is useful if you want to filter by the contents of an invisible column that usually would not have any header text
 
+## FAQ
+#### Question:
+I have a column with html styled data and the option list of its dropDown does still contain parts of the html. How do I filter by the plain value only?
+
+#### Answer:
+Add an invisible column containing only the plan values and filter by that column instead. Use `titleOverride` to set the correct title for the dropDown element.
