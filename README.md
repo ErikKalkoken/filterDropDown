@@ -36,3 +36,15 @@ Adds a dropDown element for selected columns to a Datatable allowing the user to
 	</head>
 
 Also see folder `examples` for complete examples including both vanilla html and Bootstrap.
+
+## Configuration options
+All configuration opions must be set in the `filterDropDown` section of the initialisation array for your respective DataTable.
+
+Option|Type|Mandatory|Default|Description
+--------|-------|-------|--------|-----------
+bootstrap|boolean|no|false|Defines whether Bootstrap styling should be applied
+columns|array|yes|N/A|Array of definition, one for each column that gets a filter element
+columns[].idx|number|yes|N/A|Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array
+columns[].cssStyle|string|no|""|CSS style to be applied to this select element.
+columns[].cssClass|string|no|""|CSS class to be applied to this select element.
+
