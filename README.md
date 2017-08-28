@@ -10,14 +10,29 @@ Adds a dropDown element for selected columns to a Datatable allowing the user to
  - CSS styles and/or CSS classes can be applied to each filter element
  
 ## Usage
- 1. Include this file into your html file your after the inclusion of dataTables JS
+ 1. Include the javascript file into your html file your after the inclusion of dataTables JS
  2. Add a filterDropDown section in the DataTables initialisation object
  
 ## Example
- 	$('#example').DataTable({
- 		filterDropDown: {									
- 			columns: [
-				idx: 3
-			]
- 		}
- 	} );
+ 	<!-- This is your HTML file -->
+	<head>
+		<!-- all your includes for Jquery, Bootstrap (optionally), Datatables above -->
+
+		<!-- Now we include the actual plugin -->
+		<script src="filterDropDown.min.js"></script>
+
+		<!-- Finally you define your DataTables table and include a filterDropDown section in the initialisation array -->
+		<script>
+			$(document).ready(function() {
+				$('#example').DataTable({
+					filterDropDown: {									
+						columns: [
+							idx: 3
+						]
+					}
+				} );
+			} );
+		</script>
+	</head>
+
+Also see folder `examples` for complete examples including both vanilla html and Bootstrap.
