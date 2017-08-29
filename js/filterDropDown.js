@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2017 Erik Kalkoken
  *
- * Extension for DataTables v1.10.0 (developed and tested with v1.10.15)
+ * Extension for the jQuery plug-in DataTables (developed and tested with v1.10.15)
  *
  *
 **/
@@ -17,7 +17,8 @@
 		// initialisation and setting defaults
 		var filterDef = {
 			"columns": [],
-			"bootstrap": false
+			"columnsIdxList": [],
+			"bootstrap": false			
 		};
 		
 		// set bootstrap property if it exists
@@ -42,6 +43,9 @@
 						"cssClass": (filterDef.bootstrap) ? "form-control " : "",
 						"titleOverride": null
 					};
+					
+					// add to list of indeces in same order they appear in the init array
+					filterDef['columnsIdxList'].push(idx);
 					
 					// set properties if they have been defined accordingly, otherwise the defaults will be used
 					if ( ('cssStyle' in initColumn) && (typeof initColumn.cssStyle === 'string') )
@@ -99,7 +103,7 @@
 		var divCssClass = (filterDef.bootstrap) ? "form-inline" : "";
 		$(container).prepend('<div id="' + filterWrapperId + '" class="' + divCssClass + '">Filter </div>');
 		
-		api.columns(Object.keys(filterDef.columns)).every( function () 
+		api.columns(filterDef.columnsIdxList).every( function () 
 		{
 			var column = this;
 			var idx = column.index();
@@ -146,7 +150,7 @@
 		// get container div for current data table to to add new elements to
 		var container = api.table().container();
 						
-		api.columns(Object.keys(filterDef.columns)).every( function () 
+		api.columns(filterDef.columnsIdxList).every( function () 
 		{
 			var column = this;
 			var idx = column.index();
@@ -169,7 +173,7 @@
 
 			column.data().unique().sort().each( function ( d, j ) 
 			{
-				select.append( '<option value="' + d + '">' + d + '</option>' )
+				if (d != "") select.append( '<option value="' + d + '">' + d + '</option>' );
 			} );
 		
 		} );
