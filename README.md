@@ -14,8 +14,9 @@ Here is a screenshot showing how it looks like in action:
  - CSS styles and/or CSS classes can be applied to each filter element
  
 ## Usage
- 1. Include the javascript file into your html file your after the inclusion of dataTables JS
- 2. Add a filterDropDown section in the DataTables initialisation object
+ 1. Download `filterDropDown.min.js` to your website. You find the latest version in the `js` folder.
+ 2. Include`filterDropDown.min.js` into your html file. It must be after the inclusion of dataTables JS
+ 3. Add a filterDropDown section in the DataTables initialisation object
  
 ## Example
  	<!-- This is your HTML file -->
@@ -40,6 +41,13 @@ Here is a screenshot showing how it looks like in action:
 	</head>
 
 Also see folder `examples` for complete examples including both vanilla html and Bootstrap.
+
+## Dependencies
+- JQuery: 1.12.4
+- DataTables: 1.10.15
+- Bootstrap: 3.3.7
+
+It might work with earlier versions, but that has not been tested.
 
 ## Configuration options
 All configuration opions must be set in the `filterDropDown` section of the initialisation array for your respective DataTable.
