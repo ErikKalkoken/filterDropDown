@@ -61,6 +61,12 @@ columns[].idx|number|yes|N/A|Index of selected column, starting at 0 for the fir
 columns[].maxWidth|string|no|automatic width, so that title will fit. Turned off for screens < 768 pixels|css value to assigned to max-width. use "none" to turn off automatic max-width
 columns[].title|string|no|header text of respective column or just "column x" if column has no header label|This is useful if you want to filter by the contents of an invisible column that usually would not have any header label
 
+## Styling
+The extension will generate classes for each filter that you can use to apply CSS styling. There are two classes for each table:
+- `[tableId]_filterWrapper`: this class is assigned to the div that encapsulated the whole filter element and the label. Use this to apply styles to the label.
+- `[tableId]_filterSelect`: this class is assigned to each select element
+The class names are generated based on the table ID. So e.g. if the table has the ID `example`, then the wrapper class will be called `example_filterWrapper`.
+
 ## FAQ
 #### Question:
 I have a column with html styled data and the option list of its dropDown does still contain parts of the html. How do I filter by the plain value only?
