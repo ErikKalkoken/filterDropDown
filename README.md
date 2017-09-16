@@ -55,11 +55,11 @@ All configuration opions must be set in the `filterDropDown` section of the init
 Option|Type|Mandatory|Default|Description
 --------|-------|-------|--------|-----------
 bootstrap|boolean|no|false|Defines whether Bootstrap styling should be applied
+label|string|no|"Filter "|Text displayed at the beginning of the filter row. This option can be useful if label should be shown in other languages
 columns|array|yes|N/A|Array of definition, one for each column that gets a filter element
 columns[].idx|number|yes|N/A|Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array
-columns[].cssStyle|string|no|""|CSS style to be applied to this select element.
-columns[].cssClass|string|no|""|CSS class to be applied to this select element.
-columns[].titleOverride|string|no|header text of respective column|This is useful if you want to filter by the contents of an invisible column that usually would not have any header text
+columns[].maxWidth|string|no|automatic width, so that title will fit. Turned off for screens < 768 pixels|css value to assigned to max-width. use "none" to turn off automatic max-width
+columns[].title|string|no|header text of respective column or just "column x" if column has no header label|This is useful if you want to filter by the contents of an invisible column that usually would not have any header label
 
 ## FAQ
 #### Question:
