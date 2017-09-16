@@ -2,9 +2,14 @@
  * filterDropDown.js
  *
  * Copyright (C) 2017 Erik Kalkoken
- *
+ * 
  * Extension for the jQuery plug-in DataTables (developed and tested with v1.10.15)
  *
+ * HISTORY
+ * 16-SEP-2017 v0.2.0 Change: removed cssStyle, cssClass parameter removed, replaced with generated classes for wrapper and selects
+ *    renamed titleOverride to title, added label parameter to customized label text, 
+ *    added automatic max-width based on title size, added optional maxWidth to override / turn-off the automatic
+ * 29-AUG-2017 v0.1.0 Initial version
  *
 **/
 
@@ -18,7 +23,8 @@
 		var filterDef = {
 			"columns": [],
 			"columnsIdxList": [],
-			"bootstrap": false			
+			"bootstrap": false,
+			"label": "Filter "
 		};
 		
 		// set bootstrap property if it exists
@@ -26,7 +32,13 @@
 		{
 			filterDef.bootstrap = initArray.bootstrap;
 		}
-							
+		
+		// set label property if it exists
+		if ( ("label" in initArray) && (typeof initArray.label === 'string') )
+		{
+			filterDef.label = initArray.label;
+		}
+									
 		// add definition for each column
 		if ("columns" in initArray)
 		{								
@@ -38,30 +50,24 @@
 				{
 					// initilialize column					
 					var idx = initColumn.idx;					
-					filterDef['columns'][idx] = {
-						"cssStyle": "",
-						"cssClass": (filterDef.bootstrap) ? "form-control " : "",
-						"titleOverride": null
+					filterDef['columns'][idx] = {						
+						"title": null,
+						"maxWidth": null
 					};
 					
 					// add to list of indeces in same order they appear in the init array
 					filterDef['columnsIdxList'].push(idx);
 					
 					// set properties if they have been defined accordingly, otherwise the defaults will be used
-					if ( ('cssStyle' in initColumn) && (typeof initColumn.cssStyle === 'string') )
+					if ( ('title' in initColumn) && (typeof initColumn.title === 'string') )
 					{
-						filterDef['columns'][idx].cssStyle = initColumn.cssStyle;
+						filterDef['columns'][idx].title = initColumn.title;
 					}
 					
-					if ( ('cssClass' in initColumn) && (typeof initColumn.cssClass === 'string') )
+					if ( ('maxWidth' in initColumn) && (typeof initColumn.maxWidth === 'string') )
 					{
-						filterDef['columns'][idx].cssClass  += initColumn.cssClass ;
-					}
-					
-					if ( ('titleOverride' in initColumn) && (typeof initColumn.titleOverride === 'string') )
-					{
-						filterDef['columns'][idx].titleOverride = initColumn.titleOverride;
-					}
+						filterDef['columns'][idx].maxWidth = initColumn.maxWidth;
+					}					
 				}
 			}			
 		}
@@ -100,8 +106,15 @@
 		
 		// add filter elements to DOM			
 		var filterWrapperId = id + "_filterWrapper";
-		var divCssClass = (filterDef.bootstrap) ? "form-inline" : "";
-		$(container).prepend('<div id="' + filterWrapperId + '" class="' + divCssClass + '">Filter </div>');
+		var divCssClass = filterWrapperId + " " + (
+			(filterDef.bootstrap) 
+				? "form-inline" 
+				: ""
+		);
+		$(container).prepend(
+			'<div id="' + filterWrapperId + '" class="' + divCssClass + '">' 
+			+ filterDef.label + '</div>'
+			);
 		
 		api.columns(filterDef.columnsIdxList).every( function () 
 		{
@@ -109,18 +122,32 @@
 			var idx = column.index();
 			
 			// set title of current column
-			var colName = ( filterDef.columns[idx].titleOverride !== null )
-				? filterDef.columns[idx].titleOverride 
+			var colName = ( filterDef.columns[idx].title !== null )
+				? filterDef.columns[idx].title 
 				: $(this.header()).html();
 			
+			if (colName == "") colName = 'column ' + (idx + 1);
+						
 			// adding select element for current column to container
-			var selectId = id + "_filterSelect" + idx;			
+			var selectClass = "form-control " + id + "_filterSelect";			
+			var selectId = id + "_filterSelect" + idx;		
 			$('#' + filterWrapperId).append('<select id="' + selectId 
-				+ '" class="' + filterDef.columns[idx].cssClass + '" style="' + filterDef.columns[idx].cssStyle + '"></select>');
+				+ '" class="' + selectClass + '"></select>');
 			
 			// initalising select for current column and appling event to react to changes
 			var select = $("#" + selectId).empty()
 				.append( '<option value="">(' + colName + ')</option>' );
+			
+			// set max width of select elements to current width (which is defined by the size of the title)
+			// turn off on for very small screens for responsive design
+			if (screen.width > 768) select.css('max-width', select.innerWidth());
+						
+			// apply optional css tyle if defined in init array
+			// will override automatic max width setting
+			if (filterDef.columns[idx].maxWidth !== null)
+			{
+				select.css('max-width', filterDef.columns[idx].maxWidth);
+			}	
 		} );
 	
 	} );
@@ -159,17 +186,18 @@
 			var selectId = id + "_filterSelect" + idx;							
 						
 			// initalising select for current column and appling event to react to changes
-			var select = $("#" + selectId)			
-				.on( 'change', function () 
-				{
-					var val = $.fn.dataTable.util.escapeRegex(
-						$(this).val()
-					);
+			var select = $("#" + selectId);				
+			
+			select.on( 'change', function () 
+			{
+				var val = $.fn.dataTable.util.escapeRegex(
+					$(this).val()
+				);
 
-					column
-						.search( val ? '^' + val + '$' : '', true, false )
-						.draw();
-				} );
+				column
+					.search( val ? '^' + val + '$' : '', true, false )
+					.draw();
+			} );
 
 			column.data().unique().sort().each( function ( d, j ) 
 			{
