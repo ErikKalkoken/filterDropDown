@@ -6,6 +6,7 @@
  * Extension for the jQuery plug-in DataTables (developed and tested with v1.10.15)
  *
  * HISTORY
+ * 27-NOV-2017 v0.2.1 Fix: Auto-Width of Select was too small with Chrome
  * 16-SEP-2017 v0.2.0 Change: removed cssStyle, cssClass parameter removed, replaced with generated classes for wrapper and selects
  *    renamed titleOverride to title, added label parameter to customized label text, 
  *    added automatic max-width based on title size, added optional maxWidth to override / turn-off the automatic
@@ -140,7 +141,7 @@
 			
 			// set max width of select elements to current width (which is defined by the size of the title)
 			// turn off on for very small screens for responsive design
-			if (screen.width > 768) select.css('max-width', select.innerWidth());
+			if (screen.width > 768) select.css('max-width', select.outerWidth());
 						
 			// apply optional css tyle if defined in init array
 			// will override automatic max width setting
