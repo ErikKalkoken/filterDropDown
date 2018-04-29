@@ -74,8 +74,7 @@
 					}
 					
 					if ( ('maxWidth' in initColumn) 
-						&& (typeof initColumn.maxWidth === 'number') 
-						&& (initColumn.maxWidth > 0) 
+						&& (typeof initColumn.maxWidth === 'string') 						
 					){
 						filterDef['columns'][idx].maxWidth = initColumn.maxWidth;
 					}

@@ -78,10 +78,10 @@ I have a column with html styled data and the option list of its dropDown does s
 Add an invisible column containing only the plan values and filter by that column instead. Use `titleOverride` to set the correct title for the dropDown element.
 
 #### Question:
-The select elemens are too small when rendered. How can I change the width of each column?
+The select elements are too small when rendered. How can I change the width of each column?
 
 #### Answer:
-The width of the select elemen for each column is automatically set to width of its title to safe space. This can be turned off for each column or globally for the whole table with the `autoSize` property. Alternatively you can set a custom width for each column with `maxWidth`.
+The width of the select elemen for each column is automatically set to width of its title to safe space. This can be turned off for each column or globally for the whole table with the `autoSize` property.
 
 ## History
 
