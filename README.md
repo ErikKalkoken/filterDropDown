@@ -84,9 +84,10 @@ The select elemens are too small when rendered. How can I change the width of ea
 The width of the select elemen for each column is automatically set to width of its title to safe space. This can be turned off for each column or globally for the whole table with the `autoSize` property. Alternatively you can set a custom width for each column with `maxWidth`.
 
 ## History
-29-APR-2018 v0.3.0 Change: Added option to turn-off auto-sizing. useful if table is rendered on hidden tab
-27-NOV-2017 v0.2.1 Fix: Auto-Width of Select was too small with Chrome
-16-SEP-2017 v0.2.0 Change: removed cssStyle, cssClass parameter removed, replaced with generated classes for wrapper and selects
-	renamed titleOverride to title, added label parameter to customized label text, 
-    added automatic max-width based on title size, added optional maxWidth to override / turn-off the automatic
-29-AUG-2017 v0.1.0 Initial version
+
+Date|Version|Type|Description
+--------|-------|-------|-------
+29-APR-2018|v0.3.0|New|Added option to turn-off auto-sizing. useful if table is rendered on hidden tab
+27-NOV-2017|v0.2.1|Fix|Auto-Width of Select was too small with Chrome
+16-SEP-2017|v0.2.0|Change|removed cssStyle, cssClass parameter removed, replaced with generated classes for wrapper and selects renamed titleOverride to title, added label parameter to customized label text, added automatic max-width based on title size, added optional maxWidth to override / turn-off the automatic
+29-AUG-2017|v0.1.0|New|Initial version
