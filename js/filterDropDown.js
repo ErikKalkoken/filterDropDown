@@ -1,11 +1,12 @@
 /*
  * filterDropDown.js
  *
- * Copyright (C) 2017 Erik Kalkoken
+ * Copyright (C) 2017-18 Erik Kalkoken
  * 
  * Extension for the jQuery plug-in DataTables (developed and tested with v1.10.15)
  *
  * HISTORY
+ * 29-APR-2018 v0.3.0 Change: Added option to turn-off auto-sizing. useful if table is rendered on hidden tab
  * 27-NOV-2017 v0.2.1 Fix: Auto-Width of Select was too small with Chrome
  * 16-SEP-2017 v0.2.0 Change: removed cssStyle, cssClass parameter removed, replaced with generated classes for wrapper and selects
  *    renamed titleOverride to title, added label parameter to customized label text, 
@@ -16,25 +17,30 @@
 
 (function($){
 	
-	// parse initialisation array and returns filterDef array to faster and easy use
+	// parse initialization array and returns filterDef array to faster and easy use
 	// also sets defaults for properties that are not set
 	function parseInitArray(initArray)
 	{
-		// initialisation and setting defaults
+		// initialization and setting defaults
 		var filterDef = {
 			"columns": [],
 			"columnsIdxList": [],
 			"bootstrap": false,
+			"autoSize": true,
 			"label": "Filter "
 		};
 		
-		// set bootstrap property if it exists
+		// set filter properties if they have been defined, otherwise the defaults will be used
 		if ( ("bootstrap" in initArray) && (typeof initArray.bootstrap === 'boolean') )
 		{
 			filterDef.bootstrap = initArray.bootstrap;
 		}
-		
-		// set label property if it exists
+
+		if ( ("autoSize" in initArray) && (typeof initArray.autoSize === 'boolean') )
+		{
+			filterDef.autoSize = initArray.autoSize;
+		}
+
 		if ( ("label" in initArray) && (typeof initArray.label === 'string') )
 		{
 			filterDef.label = initArray.label;
@@ -43,32 +49,42 @@
 		// add definition for each column
 		if ("columns" in initArray)
 		{								
-			for(var i=0; i<initArray.columns.length; i++)
+			for(var i = 0; i < initArray.columns.length; i++)
 			{
 				var initColumn = initArray.columns[i];
 				
 				if ( ("idx" in initColumn) && (typeof initColumn.idx === 'number') )
 				{
-					// initilialize column					
+					// initialize column					
 					var idx = initColumn.idx;					
 					filterDef['columns'][idx] = {						
 						"title": null,
-						"maxWidth": null
+						"maxWidth": null,
+						"autoSize": true
 					};
 					
 					// add to list of indeces in same order they appear in the init array
 					filterDef['columnsIdxList'].push(idx);
 					
-					// set properties if they have been defined accordingly, otherwise the defaults will be used
-					if ( ('title' in initColumn) && (typeof initColumn.title === 'string') )
-					{
+					// set column properties if they have been defined, otherwise the defaults will be used
+					if ( ('title' in initColumn) 
+						&& (typeof initColumn.title === 'string') 
+					){
 						filterDef['columns'][idx].title = initColumn.title;
 					}
 					
-					if ( ('maxWidth' in initColumn) && (typeof initColumn.maxWidth === 'string') )
-					{
+					if ( ('maxWidth' in initColumn) 
+						&& (typeof initColumn.maxWidth === 'number') 
+						&& (initColumn.maxWidth > 0) 
+					){
 						filterDef['columns'][idx].maxWidth = initColumn.maxWidth;
-					}					
+					}
+					
+					if ( ('autoSize' in initColumn) 
+						&& (typeof initColumn.autoSize === 'boolean')
+					){
+						filterDef['columns'][idx].autoSize = initColumn.autoSize;
+					}	
 				}
 			}			
 		}
@@ -76,7 +92,7 @@
 		return filterDef;		
 	}
 	
-	// Add filterDropDown container div and add default options to dropDowns
+	// Add filterDropDown container div, draw select elements with default options
 	// use preInit so that elements are created and correctly shown before data is loaded
 	$(document).on( 'preInit.dt', function ( e, settings ) 
 	{
@@ -140,8 +156,11 @@
 				.append( '<option value="">(' + colName + ')</option>' );
 			
 			// set max width of select elements to current width (which is defined by the size of the title)
-			// turn off on for very small screens for responsive design
-			if (screen.width > 768) select.css('max-width', select.outerWidth());
+			// turn off on for very small screens for responsive design or if autoSize has been set to false
+			if ( filterDef.autoSize && filterDef.columns[idx].autoSize && (screen.width > 768) )
+			{
+				select.css('max-width', select.outerWidth());
+			}
 						
 			// apply optional css tyle if defined in init array
 			// will override automatic max width setting

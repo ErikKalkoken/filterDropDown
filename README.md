@@ -55,9 +55,11 @@ All configuration opions must be set in the `filterDropDown` section of the init
 Option|Type|Mandatory|Default|Description
 --------|-------|-------|--------|-----------
 bootstrap|boolean|no|false|Defines whether Bootstrap styling should be applied
+autoSize|boolean|no|true|Turns off auto sizing for all select elements to the width of its title. Useful if table is rendered on hidden tab. (NEW)
 label|string|no|"Filter "|Text displayed at the beginning of the filter row. This option can be useful if label should be shown in other languages
 columns|array|yes|N/A|Array of definition, one for each column that gets a filter element
 columns[].idx|number|yes|N/A|Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array
+columns[].autoSize|boolean|no|true|Turns off auto sizing for this select elements to the width of its title. Useful if table is rendered on hidden tab. (NEW)
 columns[].maxWidth|string|no|automatic width, so that title will fit. Turned off for screens < 768 pixels|css value to assigned to max-width. use "none" to turn off automatic max-width
 columns[].title|string|no|header text of respective column or just "column x" if column has no header label|This is useful if you want to filter by the contents of an invisible column that usually would not have any header label
 
@@ -68,8 +70,23 @@ The extension will generate classes for each filter that you can use to apply CS
 The class names are generated based on the table ID. So e.g. if the table has the ID `example`, then the wrapper class will be called `example_filterWrapper`.
 
 ## FAQ
+
 #### Question:
 I have a column with html styled data and the option list of its dropDown does still contain parts of the html. How do I filter by the plain value only?
 
 #### Answer:
 Add an invisible column containing only the plan values and filter by that column instead. Use `titleOverride` to set the correct title for the dropDown element.
+
+#### Question:
+The select elemens are too small when rendered. How can I change the width of each column?
+
+#### Answer:
+The width of the select elemen for each column is automatically set to width of its title to safe space. This can be turned off for each column or globally for the whole table with the `autoSize` property. Alternatively you can set a custom width for each column with `maxWidth`.
+
+## History
+29-APR-2018 v0.3.0 Change: Added option to turn-off auto-sizing. useful if table is rendered on hidden tab
+27-NOV-2017 v0.2.1 Fix: Auto-Width of Select was too small with Chrome
+16-SEP-2017 v0.2.0 Change: removed cssStyle, cssClass parameter removed, replaced with generated classes for wrapper and selects
+	renamed titleOverride to title, added label parameter to customized label text, 
+    added automatic max-width based on title size, added optional maxWidth to override / turn-off the automatic
+29-AUG-2017 v0.1.0 Initial version
