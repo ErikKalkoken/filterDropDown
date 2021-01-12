@@ -35,4 +35,13 @@
     "cSpell.words": [
         "jsonify"
     ],
+    "cSpell.ignoreWords": [
+        "columns",
+        "date",
+        "extn",
+        "name",
+        "office",
+        "position",
+        "start"
+    ],
 }

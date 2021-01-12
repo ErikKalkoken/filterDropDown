@@ -1,6 +1,10 @@
+*/__pycache__/*
+*.pyc
 *.log
 *.tmp
 Temp/
 venv/
+settings.json
+launch.json
 
 
