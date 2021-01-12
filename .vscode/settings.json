@@ -1,0 +1,38 @@
+{
+    "files.exclude": {
+        "**/venv": true,
+        "**/*.egg-info": true,
+        "**/__pycache__": true
+    },
+    "search.exclude": {
+        "**/migrations": true,
+        "**/venv": true,
+        "**/dist": true,
+        "**/.tox": true,
+        "**/__pycache__": true
+    },
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.linting.flake8Args": [
+        "--ignore=E203, E231, E501, W503, W291, W293",
+        "--max-line-length=88"
+    ],
+    "python.formatting.provider": "black",
+    "python.linting.pylintEnabled": false,
+    "files.trimTrailingWhitespace": true,
+    "editor.formatOnSave": true,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./tests",
+        "-p",
+        "test*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestEnabled": false,
+    "python.testing.promptToConfigure": false,
+    "cSpell.words": [
+        "jsonify"
+    ],
+}

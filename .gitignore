@@ -1,5 +1,6 @@
 *.log
 *.tmp
 Temp/
+venv/
 
 

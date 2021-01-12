@@ -14,17 +14,17 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-		<script src="../js/filterDropDown.js"></script>
+		<script src="{{ url_for('site.static', filename='filterDropDown.js') }}"></script>
 		<script>
 			// initialising dt table
 			$(document).ready(function() {
-			
-				$('#example').DataTable({					
-					ajax: "data.json",
-					columns: [																			
+
+				$('#example').DataTable({
+					ajax: "{{ url_for('data') }}",
+					columns: [
 						{ data: 0 },
-						{ data: 1 },			
-						{ data: 2 },																			
+						{ data: 1 },
+						{ data: 2 },
 						{ data: 3 },
 						{ data: 4 },
 						{ data: 5 }
@@ -32,22 +32,22 @@
 					columnDefs: [
 						{ "visible": false, "targets": [ 5 ] }
 					],
-					filterDropDown: {										
+					filterDropDown: {
 						columns: [
-							{ 
+							{
 								idx: 1,
 								autoSize: false
-							},{ 
+							},{
 								idx: 4,
 								maxWidth: "100px"
-							},{ 
+							},{
 								idx: 2,
 								title: "City of employment"
-							},{ 
+							},{
 								idx: 5
 							}
 						],
-						bootstrap: true,						
+						bootstrap: true,
 						label: "Choose your filter: "
 					}
 				} );
