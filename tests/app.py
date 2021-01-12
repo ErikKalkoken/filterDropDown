@@ -13,17 +13,22 @@ app.register_blueprint(blueprint)
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html")
+    return render_template("index.html", title="Welcome")
 
 
 @app.route("/test_vanilla", methods=["GET"])
 def vanilla():
-    return render_template("test.html")
+    return render_template("test.html", title="Test Vanilla")
 
 
 @app.route("/test_bootstrap", methods=["GET"])
 def bootstrap():
-    return render_template("test_bs.html")
+    return render_template("test_bs.html", title="Test Bootstrap")
+
+
+@app.route("/test_serverside", methods=["GET"])
+def serverside():
+    return render_template("test_serverside.html", title="Test Server Side")
 
 
 @app.route("/data", methods=["GET"])
