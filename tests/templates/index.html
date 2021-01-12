@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>filterDropDown</title>
-  </head>
-  <body>
-    <div>
-      <h2>Welcome</h2>
-      <p>Testing filterDropDown plugin for datatables</p>
-      <ul>
-        <li><a href="{{ url_for('vanilla') }}">Test vanilla</a></li>
-        <li><a href="{{ url_for('bootstrap') }}">Test bootstrap</a></li>
-      </ul>
-    </div>
-  </body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+  <div>
+    <h2>Welcome</h2>
+    <p>Testing filterDropDown plugin for datatables</p>
+    <ul>
+      <li><a href="{{ url_for('vanilla') }}">Test vanilla</a></li>
+      <li><a href="{{ url_for('bootstrap') }}">Test bootstrap</a></li>
+    </ul>
+  </div>
+{% endblock %}
