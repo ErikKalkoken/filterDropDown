@@ -11,6 +11,9 @@
     </head>
 	<body>
         <h1 class="page-header text-center">{{ title }}</h1>
+        {% if request.endpoint != "index" %}
+            <p><a href="{{ url_for('index') }}">Back to Home</a></p>
+        {% endif %}
         {% block content %}{% endblock %}
         <script
 			  src="https://code.jquery.com/jquery-3.5.1.min.js"

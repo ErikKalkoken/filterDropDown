@@ -19,6 +19,15 @@ blueprint = Blueprint(
 )
 app.register_blueprint(blueprint)
 
+# pre-load data
+filepath = Path(__file__).parent / "data.json"
+with filepath.open("r") as f:
+    data = json.load(f)
+
+filepath = Path(__file__).parent / "data_2.json"
+with filepath.open("r") as f:
+    data_2 = json.load(f)
+
 
 @app.route("/", methods=["GET"])
 def index():
@@ -41,22 +50,14 @@ def server_side():
 
 
 @app.route("/data", methods=["GET"])
-def data():
+def data_regular():
     """API for regular AJAX calls"""
-    filepath = Path(__file__).parent / "data.json"
-    with filepath.open("r") as f:
-        data = json.load(f)
-
     return jsonify(data)
 
 
 @app.route("/data_server_side", methods=["GET"])
 def data_server_side():
     """API for AJAX calls for server side processing"""
-    filepath = Path(__file__).parent / "data_2.json"
-    with filepath.open("r") as f:
-        data_raw = json.load(f)["data"]
-
     # collect column info
     columns = dict()
     num = 0
@@ -77,18 +78,20 @@ def data_server_side():
     # global search
     global_search = request.args.get("search[value]")
     if global_search:
-        data = [
-            row for row in data_raw if global_search in "".join(row.values()).lower()
+        my_data = [
+            row
+            for row in data_2["data"]
+            if global_search in "".join(row.values()).lower()
         ]
     else:
-        data = data_raw
+        my_data = data_2["data"]
 
     # columns search
     for num in columns:
         if columns[num]["search_value"] and columns[num]["search_regex"]:
-            data = [
+            my_data = [
                 row
-                for row in data
+                for row in my_data
                 if re.search(
                     columns[num]["search_value"], row.get(columns[num]["data"])
                 )
@@ -98,22 +101,34 @@ def data_server_side():
     order_column_num = int(request.args.get("order[0][column]"))
     order_dir = request.args.get("order[0][dir]")
     if order_dir == "desc":
-        data = sorted(
-            data, key=itemgetter(columns[order_column_num]["data"]), reverse=True
+        my_data = sorted(
+            my_data, key=itemgetter(columns[order_column_num]["data"]), reverse=True
         )
     else:
-        data = sorted(data, key=itemgetter(columns[order_column_num]["data"]))
+        my_data = sorted(my_data, key=itemgetter(columns[order_column_num]["data"]))
 
     # build response page
     start = int(request.args.get("start", 0))
     length = int(request.args.get("length", 10))
     response = {
         "draw": request.args.get("draw"),
-        "data": data[start : start + length],
-        "recordsTotal": len(data),
-        "recordsFiltered": len(data),
+        "data": my_data[start : start + length],
+        "recordsTotal": len(my_data),
+        "recordsFiltered": len(my_data),
     }
     return jsonify(response)
+
+
+@app.route("/data_filter_drop_down", methods=["GET"])
+def data_filter_drop_down():
+    """API for AJAX calls from filterDropDown for server side processing"""
+    column = request.args.get("column")
+    if column and column in data_2["data"][0]:
+        response = {row[column] for row in data_2["data"]}
+        response = sorted(list(response))
+        return jsonify(response)
+
+    return jsonify(list())
 
 
 if __name__ == "__main__":

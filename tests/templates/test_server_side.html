@@ -59,20 +59,18 @@
 				filterDropDown: {
 					columns: [
 						{
-							idx: 1,
-							autoSize: false
+							idx: 1
 						},{
-							idx: 4,
-							maxWidth: "100px"
+							idx: 4
 						},{
-							idx: 2,
-							title: "City of employment"
+							idx: 2
 						},{
 							idx: 5,
 							title: "Salary"
 						}
 					],
 					bootstrap: true,
+					ajaxUrl: "{{ url_for('data_filter_drop_down') }}",
 					label: "Choose your filter: "
 				}
 			} );

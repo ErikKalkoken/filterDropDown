@@ -20,6 +20,7 @@
 			"columnsIdxList": [],
 			"bootstrap": false,
 			"autoSize": true,
+			"ajaxUrl": null,
 			"label": "Filter "
 		};
 
@@ -30,6 +31,10 @@
 
 		if (("autoSize" in initArray) && (typeof initArray.autoSize === 'boolean')) {
 			filterDef.autoSize = initArray.autoSize;
+		}
+
+		if (("ajaxUrl" in initArray) && (typeof initArray.ajaxUrl === 'string')) {
+			filterDef.ajaxUrl = initArray.ajaxUrl;
 		}
 
 		if (("label" in initArray) && (typeof initArray.label === 'string')) {
@@ -119,8 +124,7 @@
 		);
 
 		api.columns(filterDef.columnsIdxList).every(function () {
-			var column = this;
-			var idx = column.index();
+			var idx = this.index();
 
 			// set title of current column
 			var colName = (filterDef.columns[idx].title !== null)
@@ -198,9 +202,19 @@
 					.draw();
 			});
 
-			column.data().unique().sort().each(function (d, j) {
-				if (d != "") select.append('<option value="' + d + '">' + d + '</option>');
-			});
+			// build option list
+			if (filterDef.ajaxUrl == null) {
+				column.data().unique().sort().each(function (d, j) {
+					if (d != "") select.append('<option value="' + d + '">' + d + '</option>');
+				});
+			} else {
+				// build from ajax call
+				$.get(filterDef.ajaxUrl + "?column=" + column.dataSrc(), function (data, status) {
+					data.forEach(function (d) {
+						if (d != "") select.append('<option value="' + d + '">' + d + '</option>');
+					});
+				});
+			}
 
 		});
 
