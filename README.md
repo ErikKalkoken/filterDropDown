@@ -2,7 +2,7 @@
 
 Extension for JQuery plug-in DataTables adding drop down filter elements for selected columns
 
-![version](https://img.shields.io/badge/release-0.3.0-orange)
+![version](https://img.shields.io/badge/release-0.4.0-orange)
 ![jQuery](https://img.shields.io/badge/jQuery-1.12+-blue)
 ![datables](https://img.shields.io/badge/DataTables-1.10+-blue)
 ![bootstrap](https://img.shields.io/badge/Bootstrap-3-blue)
@@ -10,12 +10,11 @@ Extension for JQuery plug-in DataTables adding drop down filter elements for sel
 ## Contents
 
 - [Description](#description)
-- [Features](#features)
 - [Usage](#usage)
 - [Example](#example)
-- [Dependencies](#dependencies)
+- [Features](#features)
 - [Configuration options](#configuration-options)
-- [Styling](#styling)
+- [Dependencies](#dependencies)
 - [Tests](#tests)
 - [FAQ](#faq)
 - [Change Log](CHANGELOG.md)
@@ -25,14 +24,17 @@ Extension for JQuery plug-in DataTables adding drop down filter elements for sel
 Adds a dropDown element for selected columns to a Datatable allowing the user to filter the table to only show rows containing a certain value. e.g. in a list of employees to only show the ones that have an office in a certain city.
 The filter element extracts all unique values from a column and adds them sorted and stripped as options.
 
-Here is a screenshot showing how it looks like in action:
-![alt text](https://i.imgur.com/3PmLZKA.png "Example Screenshot of the filterDropDown")
-
-## Features
+### Key Features
 
 - Optionally works with Bootstrap 3 styling
 - Uses column header as default title, can be overriden with custom title
 - CSS styles and/or CSS classes can be applied to each filter element
+- Supports server-side processing
+
+### Screenshot
+
+Here is a screenshot showing how it looks like in action:
+![alt text](https://i.imgur.com/3PmLZKA.png "Example Screenshot of the filterDropDown")
 
 ## Usage
 
@@ -67,30 +69,9 @@ Here is a screenshot showing how it looks like in action:
 
 Also see folder `examples` for complete examples including both vanilla html and Bootstrap.
 
-## Dependencies
+## Features
 
-- JQuery: 1.12.4
-- DataTables: 1.10.15
-- Bootstrap: 3.3.7
-
-It might work with earlier versions, but that has not been tested.
-
-## Configuration options
-
-All configuration options must be set in the `filterDropDown` section of the initialization array for your respective DataTable.
-
-Option|Type|Mandatory|Default|Description
---------|-------|-------|--------|-----------
-bootstrap|boolean|no|false|Defines whether Bootstrap styling should be applied
-autoSize|boolean|no|true|Turns off auto sizing for all select elements to the width of its title. Useful if table is rendered on hidden tab. (NEW)
-label|string|no|"Filter "|Text displayed at the beginning of the filter row. This option can be useful if label should be shown in other languages
-columns|array|yes|N/A|Array of definition, one for each column that gets a filter element
-columns[].idx|number|yes|N/A|Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array
-columns[].autoSize|boolean|no|true|Turns off auto sizing for this select elements to the width of its title. Useful if table is rendered on hidden tab. (NEW)
-columns[].maxWidth|string|no|automatic width, so that title will fit. Turned off for screens < 768 pixels|css value to assigned to max-width. use "none" to turn off automatic max-width
-columns[].title|string|no|header text of respective column or just "column x" if column has no header label|This is useful if you want to filter by the contents of an invisible column that usually would not have any header label
-
-## Styling
+### Styling
 
 The extension will generate classes for each filter that you can use to apply CSS styling. There are two classes for each table:
 
@@ -99,9 +80,80 @@ The extension will generate classes for each filter that you can use to apply CS
 
 The class names are generated based on the table ID. So e.g. if the table has the ID `example`, then the wrapper class will be called `example_filterWrapper`.
 
+### Server-side processing
+
+DataTables can switch to server-side processing, and filterDropDown also supports it.
+
+To use server-side processing your app will need to have an endpoint that provides the necessary data, similar to the endpoint needed to power DataTables server-side processing feature. To enable server-side processing just provide an URL to that endpoint in the `ajax` property of the filterDropDown init array.
+
+The endpoint needs to implement the following protocol:
+
+#### Request
+
+The endpoint will receive a GET request with the following query parameter:
+
+- `columns`: list of requested column names
+
+Example:
+
+```plain
+http://www.example.com/endpoint?columns=office,position,name
+```
+
+Column names will match with the names defined in the DataTables init array under `data` for each column.
+
+#### Response
+
+The endpoint will need to respond with an JSON object that has the requested columns as property names and the sorted list of options as it's respective values.
+
+Note that all data processing like selecting unique values and sorting is expected to happen by the server.
+
+Examples:
+
+```JSON
+{
+    "office":
+        [
+            "Edinburgh", "London", "New Yok", "San Francisco", "Sidney", "Tokyo"
+        ],
+    "position":
+        [
+            "Accountant", "Customer Support", "Data Coordinator", "Developer"
+        ]
+}
+```
+
+#### Error handling
+
+In case columns are missing in the response, those will be reported with a warning in the browser console.
+
+## Configuration options
+
+All configuration options must be set in the `filterDropDown` section of the initialization array for your respective DataTable.
+
+Option|Type|Mandatory|Default|Description
+--------|-------|-------|--------|-----------
+bootstrap|boolean|no|`false`|Defines whether Bootstrap styling should be applied
+autoSize|boolean|no|`true`|Turns off auto sizing for all select elements to the width of its title. Useful if table is rendered on hidden tab.
+label|string|no|`"Filter "`|Text displayed at the beginning of the filter row. This option can be useful if label should be shown in other languages
+ajax|string|no|`null`|URL to server endpoint for server-side processing. Enabled by providing a value.
+columns|array|yes|N/A|Array of definition, one for each column that gets a filter element
+columns[].idx|number|yes|N/A|Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array
+columns[].autoSize|boolean|no|`true`|Turns off auto sizing for this select elements to the width of its title. Useful if table is rendered on hidden tab.
+columns[].maxWidth|string|no|automatic width, so that title will fit. Turned off for screens < 768 pixels|css value to assigned to max-width. use "none" to turn off automatic max-width
+columns[].title|string|no|header text of respective column or just "column x" if column has no header label|This is useful if you want to filter by the contents of an invisible column that usually would not have any header label
+
+## Dependencies
+
+- JQuery: 1.12.4+
+- DataTables: 1.10.15+
+- Bootstrap: 3.3.7+
+
+It might work with earlier versions, but that has not been tested.
+
 ## Tests
 
-You find the tests under the `tests` folder. The tests are running with a webserver build with Python 3.6 and [Flask](https://flask.palletsprojects.com/en/1.1.x/).
+You find tests under the `tests` folder. These are manual tests that are run with a webserver build with Python 3.6 and [Flask](https://flask.palletsprojects.com/en/1.1.x/).
 
 ## FAQ
 

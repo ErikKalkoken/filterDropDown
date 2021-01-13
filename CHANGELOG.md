@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - yyyy-mm-dd
 
+## [0.4.0] - 2020-01-13
+
+### Added
+
+- Support for server-side processing
+
 ## [0.3.0] - 2018-04-29
 
 ### Added

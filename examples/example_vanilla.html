@@ -3,23 +3,23 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>FilterDropDown example</title>	
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">		
+		<title>FilterDropDown example</title>
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>		
+		<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 		<script src="../js/filterDropDown.js"></script>
 		<script>
 			// initialising dt table
 			$(document).ready(function() {
-			
-				$('#example').DataTable({					
-					// Definition of filter to display					
-					filterDropDown: {										
+
+				$('#example').DataTable({
+					// Definition of filter to display
+					filterDropDown: {
 						columns: [
-							{ 
+							{
 								idx: 2
 							},
-							{ 
+							{
 								idx: 3
 							}
 						],
@@ -442,14 +442,14 @@
 						<td>$112,000</td>
 					</tr>
 				</tbody>
-				<tfoot>					
+				<tfoot>
 					<tr>
 						<th>First name</th>
 						<th>Last name</th>
 						<th>Position</th>
 						<th>Office</th>
 						<th>Salary</th>
-					</tr>				
+					</tr>
 				</tfoot>
 			</table>
 		</div>
