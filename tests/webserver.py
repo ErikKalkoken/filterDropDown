@@ -122,13 +122,15 @@ def data_server_side():
 @app.route("/data_filter_drop_down", methods=["GET"])
 def data_filter_drop_down():
     """API for AJAX calls from filterDropDown for server side processing"""
-    column = request.args.get("column")
-    if column and column in data_2["data"][0]:
-        response = {row[column] for row in data_2["data"]}
-        response = sorted(list(response))
-        return jsonify(response)
+    columns = request.args.get("columns")
+    response = dict()
+    if columns:
+        for column in columns.split(","):
+            if column in data_2["data"][0]:
+                options = {row[column] for row in data_2["data"]}
+                response[column] = sorted(list(options))
 
-    return jsonify(list())
+    return jsonify(response)
 
 
 if __name__ == "__main__":
