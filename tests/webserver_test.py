@@ -1,4 +1,6 @@
 import unittest
+import urllib
+
 from webserver import app
 
 
@@ -32,9 +34,23 @@ class TestWebserver(unittest.TestCase):
             result.json["data"],
         )
 
-    def test_should_return_columns_for_filter_drop_down(self):
+    def test_should_return_columns_for_filter_drop_down_1(self):
         # when
-        result = self.app.get("/data_filter_drop_down?columns=position,office,name")
+        value = urllib.parse.quote_plus("1,2,0")
+        result = self.app.get(f"/data_filter_drop_down_1?columns={value}")
+        # then
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("application/json", result.content_type)
+        self.assertIn("1", result.json)
+        self.assertIn("Junior Technical Author", result.json["1"])
+        self.assertIn("2", result.json)
+        self.assertIn("Edinburgh", result.json["2"])
+        self.assertIn("0", result.json)
+        self.assertIn("Garrett Winters", result.json["0"])
+
+    def test_should_return_columns_for_filter_drop_down_2(self):
+        # when
+        result = self.app.get("/data_filter_drop_down_2?columns=position,office,name")
         # then
         self.assertEqual(result.status_code, 200)
         self.assertIn("application/json", result.content_type)

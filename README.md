@@ -12,7 +12,7 @@ Extension for JQuery plug-in DataTables adding drop down filter elements for sel
 - [Description](#description)
 - [Usage](#usage)
 - [Example](#example)
-- [Features](#features)
+- [Special features](#special-features)
 - [Configuration options](#configuration-options)
 - [Dependencies](#dependencies)
 - [Tests](#tests)
@@ -69,7 +69,7 @@ Here is a screenshot showing how it looks like in action:
 
 Also see folder `examples` for complete examples including both vanilla html and Bootstrap.
 
-## Features
+## Special features
 
 ### Styling
 
@@ -82,21 +82,27 @@ The class names are generated based on the table ID. So e.g. if the table has th
 
 ### Server-side processing
 
-DataTables can switch to server-side processing, and filterDropDown also supports it.
+DataTables can use to server-side processing, and filterDropDown also supports it.
 
-To use server-side processing your app will need to have an endpoint that provides the necessary data, similar to the endpoint needed to power DataTables server-side processing feature. To enable server-side processing just provide an URL to that endpoint in the `ajax` property of the filterDropDown init array.
+To use server-side processing your app will needs two things:
 
-The endpoint needs to implement the following protocol:
+1. An endpoint for filterDropDown that provides the necessary data, similar to the endpoint needed to power DataTables server-side processing feature.
+2. The endpoint for DataTables must support the feature of searching columns with regex (`columns[{num}][search][regex]`)
+
+To enable server-side processing just provide an URL to that endpoint in the `ajax` property of the filterDropDown init array.
+
+The endpoint for filterDropDown needs to implement the following protocol:
 
 #### Request
 
 The endpoint will receive a GET request with the following query parameter:
 
-- `columns`: list of requested column names
+- `columns`: list of requested columns, either by name or index (depends on `columns` definition)
 
-Example:
+Example2:
 
 ```plain
+http://www.example.com/endpoint?columns=2,3,0
 http://www.example.com/endpoint?columns=office,position,name
 ```
 
@@ -104,7 +110,7 @@ Column names will match with the names defined in the DataTables init array unde
 
 #### Response
 
-The endpoint will need to respond with an JSON object that has the requested columns as property names and the sorted list of options as it's respective values.
+The endpoint will need to respond with an JSON object that has the requested columns as property key and the sorted list of options as it's respective values.
 
 Note that all data processing like selecting unique values and sorting is expected to happen by the server.
 
@@ -117,6 +123,19 @@ Examples:
             "Edinburgh", "London", "New Yok", "San Francisco", "Sidney", "Tokyo"
         ],
     "position":
+        [
+            "Accountant", "Customer Support", "Data Coordinator", "Developer"
+        ]
+}
+```
+
+```JSON
+{
+    "2":
+        [
+            "Edinburgh", "London", "New Yok", "San Francisco", "Sidney", "Tokyo"
+        ],
+    "3":
         [
             "Accountant", "Customer Support", "Data Coordinator", "Developer"
         ]

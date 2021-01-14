@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<!-- Bootstrap -->
+	<link
+		rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+		crossorigin="anonymous">
+	<link
+		rel="stylesheet"
+		href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<table id="example" class="table" width="100%" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Position</th>
+					<th>Office</th>
+					<th>Extn.</th>
+					<th>Start date</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+{% endblock %}
+
+{% block javascript %}
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+	</script>
+	<script
+		src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js">
+	</script>
+	<script>
+		// initialising dt table
+		$(document).ready(function() {
+
+			$('#example').DataTable({
+				ajax: "{{ url_for('data_regular') }}",
+				columns: [
+					{ data: 0 },
+					{ data: 1 },
+					{ data: 2 },
+					{ data: 3 },
+					{ data: 4 },
+					{ data: 5 }
+				],
+				columnDefs: [
+					{ "visible": false, "targets": [ 5 ] }
+				],
+				filterDropDown: {
+					columns: [
+						{
+							idx: 1
+						},{
+							idx: 4
+						},{
+							idx: 2
+						},{
+							idx: 5,
+							title: "Salary"
+						}
+					],
+					bootstrap: true
+				}
+			} );
+		} );
+	</script>
+{% endblock %}

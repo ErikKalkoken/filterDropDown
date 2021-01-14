@@ -42,7 +42,7 @@
 		$(document).ready(function() {
 
 			$('#example').DataTable({
-				ajax: "{{ url_for('data_server_side') }}",
+				ajax: "{{ url_for('data_server_side_2') }}",
 				"processing": true,
 				"serverSide": true,
 				columns: [
@@ -70,8 +70,7 @@
 						}
 					],
 					bootstrap: true,
-					ajax: "{{ url_for('data_filter_drop_down') }}",
-					label: "Choose your filter: "
+					ajax: "{{ url_for('data_filter_drop_down_2') }}"
 				}
 			} );
 		} );
