@@ -5,7 +5,7 @@ Extension for JQuery plug-in DataTables adding drop down filter elements for sel
 ![version](https://img.shields.io/badge/release-0.4.0-orange)
 ![jQuery](https://img.shields.io/badge/jQuery-1.12+-blue)
 ![datables](https://img.shields.io/badge/DataTables-1.10+-blue)
-![bootstrap](https://img.shields.io/badge/Bootstrap-3-blue)
+![bootstrap](https://img.shields.io/badge/Bootstrap-3.x-blue)
 
 ## Contents
 
@@ -159,7 +159,7 @@ ajax|string|no|`null`|URL to server endpoint for server-side processing. Enabled
 columns|array|yes|N/A|Array of definition, one for each column that gets a filter element
 columns[].idx|number|yes|N/A|Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array
 columns[].autoSize|boolean|no|`true`|Turns off auto sizing for this select elements to the width of its title. Useful if table is rendered on hidden tab.
-columns[].maxWidth|string|no|automatic width, so that title will fit. Turned off for screens < 768 pixels|css value to assigned to max-width. use "none" to turn off automatic max-width
+columns[].maxWidth|string|no|automatic width, so that title will fit. Turned off for screens < 768 pixels|css value to assigned to max-width. use `"null"` to turn off automatic max-width or specify a custom witdh, e.g. `"5em"`
 columns[].title|string|no|header text of respective column or just "column x" if column has no header label|This is useful if you want to filter by the contents of an invisible column that usually would not have any header label
 
 ## Dependencies
