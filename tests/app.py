@@ -2,15 +2,15 @@
 webserver for testing filterDropDown
 
 Shows a website with all test scenarios
-and implents API for AJAX calls: regular and server side processing
+and implements API for AJAX calls: regular and server side processing
 """
 
 import json
+import re
 from operator import itemgetter
 from pathlib import Path
-import re
 
-from flask import Flask, render_template, Blueprint, jsonify, request
+from flask import Blueprint, Flask, jsonify, render_template, request
 
 app = Flask(__name__)
 static_path = Path(__file__).parent.parent / "js"
