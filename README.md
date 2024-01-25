@@ -2,10 +2,10 @@
 
 Extension for JQuery plug-in DataTables adding drop down filter elements for selected columns
 
-![version](https://img.shields.io/badge/release-0.4.0-orange)
-![jQuery](https://img.shields.io/badge/jQuery-1.12+-blue)
-![DataTables](https://img.shields.io/badge/DataTables-1.10+-blue)
-![bootstrap](https://img.shields.io/badge/Bootstrap-3.x-blue)
+![version](https://img.shields.io/badge/release-0.5.0-orange)
+![jQuery](https://img.shields.io/badge/jQuery-3.7.0-blue)
+![DataTables](https://img.shields.io/badge/DataTables-1.13.7-blue)
+![bootstrap](https://img.shields.io/badge/Bootstrap-3_|_5-blue)
 
 ## Contents
 
@@ -26,9 +26,9 @@ The filter element extracts all unique values from a column and adds them sorted
 
 ### Key Features
 
-- Optionally works with Bootstrap 3 styling
 - Uses column header as default title, can be overridden with custom title
 - CSS styles and/or CSS classes can be applied to each filter element
+- Supports Bootstrap 3 and Boostrap 5 styling
 - Supports server-side processing
 
 ### Screenshot
@@ -211,7 +211,7 @@ Here is how you can run these tests:
 
 ```sh
 cd tests
-python -m unittest discover
+python app_test.py
 ```
 
 ## FAQ
