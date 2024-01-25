@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Support for Bootstrap 5 (Big thanks to @ppfeufer for contributing this feature!)
 
+### Changed
+
+- Updated tests to newest versions of 3rd party libraries
+- Improved documentation
+
 ## [0.4.0] - 2020-01-13
 
 ### Added
