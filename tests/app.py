@@ -46,7 +46,12 @@ def bootstrap_neutral():
 
 @app.route("/test_bootstrap_extras", methods=["GET"])
 def bootstrap_extras():
-    return render_template("test_bs_extras.html", title="Test Bootstrap")
+    return render_template("test_bs_extras.html", title="Test Bootstrap 3")
+
+
+@app.route("/test_bootstrap5", methods=["GET"])
+def bootstrap5():
+    return render_template("test_bs5.html", title="Test Bootstrap 5")
 
 
 @app.route("/test_server_side_1", methods=["GET"])
