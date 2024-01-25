@@ -16,6 +16,7 @@
     "[django-html]": {
         "editor.formatOnSave": false
     },
+    "prettier.tabWidth": 4,
     "python.testing.unittestArgs": [
         "-v",
         "-s",
