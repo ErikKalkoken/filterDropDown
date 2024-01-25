@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div>
-    <p>Testing filterDropDown plugin for datatables</p>
-    <ul>
-      <li><a href="{{ url_for('vanilla') }}">Test Vanilla</a></li>
-      <li><a href="{{ url_for('bootstrap_neutral') }}">Test Bootstrap Neutral</a></li>
-      <li><a href="{{ url_for('server_side_1') }}">Test Server Side 1</a></li>
-      <li><a href="{{ url_for('server_side_2') }}">Test Server Side 2</a></li>
-    </ul>
-  </div>
+    <div>
+        <p>Testing filterDropDown plugin for datatables</p>
+        <ul>
+            <li><a href="{{ url_for('vanilla') }}">Test Vanilla</a></li>
+            <li><a href="{{ url_for('bootstrap_neutral') }}">Test Bootstrap 3</a></li>
+            <li><a href="{{ url_for('bootstrap5') }}">Test Bootstrap 5</a></li>
+            <li><a href="{{ url_for('server_side_1') }}">Test Server Side 1</a></li>
+            <li><a href="{{ url_for('server_side_2') }}">Test Server Side 2</a></li>
+        </ul>
+    </div>
 {% endblock %}

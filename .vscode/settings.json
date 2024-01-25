@@ -13,6 +13,9 @@
     },
     "files.trimTrailingWhitespace": true,
     "editor.formatOnSave": true,
+    "[django-html]": {
+        "editor.formatOnSave": false
+    },
     "python.testing.unittestArgs": [
         "-v",
         "-s",
