@@ -4,7 +4,7 @@ Extension for JQuery plug-in DataTables adding drop down filter elements for sel
 
 ![version](https://img.shields.io/badge/release-0.4.0-orange)
 ![jQuery](https://img.shields.io/badge/jQuery-1.12+-blue)
-![datables](https://img.shields.io/badge/DataTables-1.10+-blue)
+![DataTables](https://img.shields.io/badge/DataTables-1.10+-blue)
 ![bootstrap](https://img.shields.io/badge/Bootstrap-3.x-blue)
 
 ## Contents
@@ -21,13 +21,13 @@ Extension for JQuery plug-in DataTables adding drop down filter elements for sel
 
 ## Description
 
-Adds a dropDown element for selected columns to a Datatable allowing the user to filter the table to only show rows containing a certain value. e.g. in a list of employees to only show the ones that have an office in a certain city.
+Adds a dropDown element for selected columns to a datatable allowing the user to filter the table to only show rows containing a certain value. e.g. in a list of employees to only show the ones that have an office in a certain city.
 The filter element extracts all unique values from a column and adds them sorted and stripped as options.
 
 ### Key Features
 
 - Optionally works with Bootstrap 3 styling
-- Uses column header as default title, can be overriden with custom title
+- Uses column header as default title, can be overridden with custom title
 - CSS styles and/or CSS classes can be applied to each filter element
 - Supports server-side processing
 
@@ -159,7 +159,7 @@ ajax|string|no|`null`|URL to server endpoint for server-side processing. Enabled
 columns|array|yes|N/A|Array of definition, one for each column that gets a filter element
 columns[].idx|number|yes|N/A|Index of selected column, starting at 0 for the first column. Same as indices used in DataTables config array
 columns[].autoSize|boolean|no|`true`|Turns off auto sizing for this select elements to the width of its title. Useful if table is rendered on hidden tab.
-columns[].maxWidth|string|no|automatic width, so that title will fit. Turned off for screens < 768 pixels|css value to assigned to max-width. use `"null"` to turn off automatic max-width or specify a custom witdh, e.g. `"5em"`
+columns[].maxWidth|string|no|automatic width, so that title will fit. Turned off for screens < 768 pixels|css value to assigned to max-width. use `"null"` to turn off automatic max-width or specify a custom width, e.g. `"5em"`
 columns[].title|string|no|header text of respective column or just "column x" if column has no header label|This is useful if you want to filter by the contents of an invisible column that usually would not have any header label
 
 ## Dependencies
@@ -172,22 +172,62 @@ It might work with earlier versions, but that has not been tested.
 
 ## Tests
 
-You find tests under the `tests` folder. These are manual tests that are run with a webserver build with Python 3.6 and [Flask](https://flask.palletsprojects.com/en/1.1.x/).
+You find test instrumentation in the `tests` folder. There are two parts:
+
+- Web server
+- Unit tests for the web server
+
+### Setup
+
+The tests are running a web server build with with [Flask](https://flask.palletsprojects.com/en/1.1.x/). Here is how to setup your test environment:
+
+```sh
+python3 -m venv venv
+source venv/bin/activate
+cd tests
+pip install -r requirements.txt
+```
+
+### Web server
+
+The web server will render a web site with several example data tables, which will allow you to manually test the filterDropDown library with various scenarios, e.g.:
+
+- Vanilla style
+- Bootstrap style
+- Server side processing
+
+Here is how to start the web server (we recommend doing this in a Python virtual environment):
+
+```sh
+cd tests
+flask run
+```
+
+### Web server unit tests
+
+The unit tests are in Python and only test the web server, not the filterDropDown library. These tests only need to run when the web server code was changed.
+
+Here is how you can run these tests:
+
+```sh
+cd tests
+python -m unittest discover
+```
 
 ## FAQ
 
-#### Question
+### Question
 
 I have a column with html styled data and the option list of its dropDown does still contain parts of the html. How do I filter by the plain value only?
 
-#### Answer
+### Answer
 
 Add an invisible column containing only the plan values and filter by that column instead. Use `titleOverride` to set the correct title for the dropDown element.
 
-#### Question
+### Question
 
 The select elements are too small when rendered. How can I change the width of each column?
 
-#### Answer
+### Answer
 
 The width of the select element for each column is automatically set to width of its title to safe space. This can be turned off for each column or globally for the whole table with the `autoSize` property.

@@ -1,10 +1,10 @@
 import unittest
 import urllib
 
-from webserver import app
+from app import app
 
 
-class TestWebserver(unittest.TestCase):
+class TestWebServer(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.app.testing = True
