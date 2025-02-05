@@ -153,6 +153,7 @@ All configuration options must be set in the `filterDropDown` section of the ini
 Option|Type|Mandatory|Default|Description
 --------|-------|-------|--------|-----------
 bootstrap|boolean|no|`false`|Defines whether Bootstrap styling should be applied
+bootstrap_version|int|no|`3`|Set the Bootstrap version for rendering. Supports `3` and `5`.
 autoSize|boolean|no|`true`|Turns off auto sizing for all select elements to the width of its title. Useful if table is rendered on hidden tab.
 label|string|no|`"Filter "`|Text displayed at the beginning of the filter row. This option can be useful if label should be shown in other languages
 ajax|string|no|`null`|URL to server endpoint for server-side processing. Enabled by providing a value.
